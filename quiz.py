@@ -31,3 +31,29 @@ class Quiz:
     def answer_text(self):
         """정답 번호와 내용을 문자열로 돌려준다. 예: '3. 6개'"""
         return f"{self.answer}. {self.choices[self.answer - 1]}"
+
+    def to_dict(self):
+        """JSON으로 저장할 수 있는 dict로 변환한다."""
+        return {
+            "question": self.question,
+            "choices": self.choices,
+            "answer": self.answer,
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        """state.json에서 읽은 dict를 Quiz로 변환한다. 형식이 틀리면 ValueError."""
+        if not isinstance(data, dict):
+            raise ValueError("퀴즈 데이터가 객체(dict) 형식이 아닙니다.")
+        question = data.get("question")
+        choices = data.get("choices")
+        answer = data.get("answer")
+
+        if not isinstance(question, str) or not question.strip():
+            raise ValueError("question이 올바르지 않습니다.")
+        if not isinstance(choices, list) or not all(isinstance(c, str) for c in choices):
+            raise ValueError("choices가 올바르지 않습니다.")
+        # bool은 int의 하위 타입이라 True가 1로 통과하지 않도록 따로 막는다.
+        if not isinstance(answer, int) or isinstance(answer, bool):
+            raise ValueError("answer가 올바르지 않습니다.")
+        return cls(question, choices, answer)

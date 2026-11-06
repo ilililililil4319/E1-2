@@ -1,8 +1,11 @@
 """게임 전체(퀴즈 목록, 점수, 메뉴 흐름)를 관리하는 QuizGame 클래스."""
 
+import os
+
 from default_quizzes import create_default_quizzes
 from input_utils import read_number, read_text
 from quiz import CHOICE_COUNT, Quiz
+from storage import StateFileError
 
 LINE = "=" * 40
 SUB_LINE = "-" * 40
@@ -11,11 +14,13 @@ SUB_LINE = "-" * 40
 class QuizGame:
     """퀴즈 목록과 최고 점수를 가지고 메뉴를 진행하는 게임 관리자."""
 
-    def __init__(self):
-        self.quizzes = create_default_quizzes()
+    def __init__(self, storage):
+        self.storage = storage
+        self.quizzes = []
         self.best_score = None  # 아직 한 번도 풀지 않았으면 None
         self.best_correct = 0
         self.best_total = 0
+        self.load_message = ""
 
         # (메뉴 이름, 실행할 메서드). 메서드가 None이면 종료
         self.menu_items = [
@@ -31,6 +36,9 @@ class QuizGame:
         print(LINE)
         print("        🎯 나만의 퀴즈 게임 🎯")
         print(LINE)
+        if self.load_message:
+            print(self.load_message)
+            print(LINE)
 
     def show_menu(self):
         print()
@@ -49,7 +57,51 @@ class QuizGame:
                 break
             print()
             action()
+        self.save_state()
         print("👋 프로그램을 종료합니다. 다음에 또 만나요!")
+
+    # ------------------------------------------------------------- 저장/불러오기
+    def load_state(self):
+        """state.json을 불러온다. 없거나 손상되면 기본 퀴즈로 시작한다."""
+        try:
+            data = self.storage.load()
+        except FileNotFoundError:
+            self._reset_to_default()
+            self.load_message = "🆕 저장된 데이터가 없어 기본 퀴즈로 시작합니다."
+            self.save_state()
+            return
+        except StateFileError as error:
+            backup_path = self.storage.backup_broken_file()
+            self._reset_to_default()
+            self.load_message = f"⚠️ 데이터 파일이 손상되어 기본 퀴즈로 복구했습니다. ({error})"
+            if backup_path:
+                self.load_message += f"\n   손상된 파일은 {os.path.basename(backup_path)}로 백업했습니다."
+            self.save_state()
+            return
+
+        self.quizzes = data["quizzes"]
+        self.best_score = data["best_score"]
+        self.best_correct = data["best_correct"]
+        self.best_total = data["best_total"]
+        best_text = "없음" if self.best_score is None else f"{self.best_score}점"
+        self.load_message = (
+            f"📂 저장된 데이터를 불러왔습니다. (퀴즈 {len(self.quizzes)}개, 최고점수 {best_text})"
+        )
+
+    def save_state(self):
+        """현재 상태를 state.json에 저장한다. 실패해도 프로그램은 계속 동작한다."""
+        try:
+            self.storage.save(self.quizzes, self.best_score, self.best_correct, self.best_total)
+            return True
+        except OSError as error:
+            print(f"⚠️ 데이터를 저장하지 못했습니다: {error}")
+            return False
+
+    def _reset_to_default(self):
+        self.quizzes = create_default_quizzes()
+        self.best_score = None
+        self.best_correct = 0
+        self.best_total = 0
 
     # ------------------------------------------------------------------ 기능
     def play_quiz(self):
@@ -80,6 +132,7 @@ class QuizGame:
         print(f"🏆 결과: {total}문제 중 {correct}문제 정답! ({score}점)")
         if self.update_best_score(score, correct, total):
             print("🎉 새로운 최고 점수입니다!")
+            self.save_state()
         print(LINE)
 
     def update_best_score(self, score, correct, total):
@@ -100,6 +153,7 @@ class QuizGame:
         answer = read_number(f"정답 번호 (1-{CHOICE_COUNT}): ", 1, CHOICE_COUNT)
 
         self.quizzes.append(Quiz(question, choices, answer))
+        self.save_state()
         print()
         print("✅ 퀴즈가 추가되었습니다!")
 
