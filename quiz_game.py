@@ -91,7 +91,17 @@ class QuizGame:
         print("✅ 퀴즈가 추가되었습니다!")
 
     def list_quizzes(self):
-        print("🚧 준비 중인 기능입니다.")
+        """등록된 퀴즈의 문제 목록을 번호와 함께 출력한다."""
+        if not self.quizzes:
+            print("📭 등록된 퀴즈가 없습니다.")
+            return
+
+        print(f"📋 등록된 퀴즈 목록 (총 {len(self.quizzes)}개)")
+        print()
+        print(SUB_LINE)
+        for number, quiz in enumerate(self.quizzes, start=1):
+            print(f"[{number}] {quiz.question}")
+        print(SUB_LINE)
 
     def show_best_score(self):
         print("🚧 준비 중인 기능입니다.")
