@@ -49,14 +49,19 @@ class QuizGame:
     def run(self):
         """메인 루프: 메뉴 출력 → 선택 → 기능 실행을 종료할 때까지 반복."""
         self.print_banner()
-        while True:
-            self.show_menu()
-            choice = read_number("선택: ", 1, len(self.menu_items))
-            label, action = self.menu_items[choice - 1]
-            if action is None:
-                break
-            print()
-            action()
+        try:
+            while True:
+                self.show_menu()
+                choice = read_number("선택: ", 1, len(self.menu_items))
+                label, action = self.menu_items[choice - 1]
+                if action is None:
+                    break
+                print()
+                action()
+        except (KeyboardInterrupt, EOFError):
+            # Ctrl+C 또는 입력 스트림 종료(Ctrl+D / 파이프 끝)
+            # 진행 중이던 풀이·추가 입력은 버리고, 저장된 데이터는 지킨 채 종료한다.
+            print("\n\n⚠️ 입력이 중단되었습니다. 데이터를 저장하고 안전하게 종료합니다.")
         self.save_state()
         print("👋 프로그램을 종료합니다. 다음에 또 만나요!")
 
