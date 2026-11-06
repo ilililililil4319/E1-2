@@ -2,6 +2,7 @@
 
 import os
 import random
+from datetime import datetime
 
 from default_quizzes import create_default_quizzes
 from input_utils import read_number, read_text, read_yes_no
@@ -22,6 +23,7 @@ class QuizGame:
         self.best_score = None  # 아직 한 번도 풀지 않았으면 None
         self.best_correct = 0
         self.best_total = 0
+        self.history = []  # 모든 게임 기록 (보너스)
         self.load_message = ""
 
         # (메뉴 이름, 실행할 메서드). 메서드가 None이면 종료
@@ -31,6 +33,7 @@ class QuizGame:
             ("퀴즈 목록", self.list_quizzes),
             ("점수 확인", self.show_best_score),
             ("퀴즈 삭제", self.delete_quiz),
+            ("게임 기록", self.show_history),
             ("종료", None),
         ]
 
@@ -91,6 +94,7 @@ class QuizGame:
         self.best_score = data["best_score"]
         self.best_correct = data["best_correct"]
         self.best_total = data["best_total"]
+        self.history = data["history"]
         best_text = "없음" if self.best_score is None else f"{self.best_score}점"
         self.load_message = (
             f"📂 저장된 데이터를 불러왔습니다. (퀴즈 {len(self.quizzes)}개, 최고점수 {best_text})"
@@ -99,7 +103,9 @@ class QuizGame:
     def save_state(self):
         """현재 상태를 state.json에 저장한다. 실패해도 프로그램은 계속 동작한다."""
         try:
-            self.storage.save(self.quizzes, self.best_score, self.best_correct, self.best_total)
+            self.storage.save(
+                self.quizzes, self.best_score, self.best_correct, self.best_total, self.history
+            )
             return True
         except OSError as error:
             print(f"⚠️ 데이터를 저장하지 못했습니다: {error}")
@@ -110,6 +116,7 @@ class QuizGame:
         self.best_score = None
         self.best_correct = 0
         self.best_total = 0
+        self.history = []
 
     # ------------------------------------------------------------------ 기능
     def play_quiz(self):
@@ -163,8 +170,9 @@ class QuizGame:
             print(f"💡 힌트 {hints_used}회 사용 (힌트 없이 맞혔다면 {round(correct / total * 100)}점)")
         if self.update_best_score(score, correct, total):
             print("🎉 새로운 최고 점수입니다!")
-            self.save_state()
         print(LINE)
+        self.record_history(total, correct, hints_used, score)
+        self.save_state()
 
     def read_answer(self, quiz, allow_hint):
         """정답 번호(1~4)를 입력받는다. 힌트를 쓸 수 있으면 'h'도 허용하고 'hint'를 돌려준다."""
@@ -194,6 +202,16 @@ class QuizGame:
                 print(f"⚠️ 잘못된 입력입니다. {guide}")
                 continue
             return number
+
+    def record_history(self, total, correct, hints_used, score):
+        """게임 1회의 결과를 기록에 추가한다."""
+        self.history.append({
+            "played_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "total": total,
+            "correct": correct,
+            "hints_used": hints_used,
+            "score": score,
+        })
 
     def update_best_score(self, score, correct, total):
         """이번 점수가 최고 점수보다 높으면 갱신하고 True를 돌려준다."""
@@ -264,3 +282,24 @@ class QuizGame:
             f"🏆 최고 점수: {self.best_score}점 "
             f"({self.best_total}문제 중 {self.best_correct}문제 정답)"
         )
+
+    def show_history(self, limit=10):
+        """지금까지의 게임 기록을 최근 limit개까지 보여준다."""
+        if not self.history:
+            print("📭 아직 게임 기록이 없습니다.")
+            return
+
+        recent = self.history[-limit:]
+        print(f"📜 게임 기록 (전체 {len(self.history)}회 중 최근 {len(recent)}회)")
+        print()
+        print(SUB_LINE)
+        start = len(self.history) - len(recent) + 1
+        for number, record in enumerate(recent, start=start):
+            print(
+                f"#{number:<3} {record['played_at']} | "
+                f"{record['total']}문제 중 {record['correct']}개 정답 | "
+                f"힌트 {record['hints_used']}회 | {record['score']}점"
+            )
+        print(SUB_LINE)
+        average = sum(record["score"] for record in self.history) / len(self.history)
+        print(f"📊 평균 점수: {average:.1f}점")

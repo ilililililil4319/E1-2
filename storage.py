@@ -57,14 +57,26 @@ class StateStorage:
         ):
             raise ValueError("best_score가 정수가 아닙니다.")
 
+        history = data.get("history", [])  # 예전 파일에는 없을 수 있음
+        if not isinstance(history, list):
+            raise ValueError("history가 리스트가 아닙니다.")
+        history = [record for record in history if self._is_valid_record(record)]
+
         return {
             "quizzes": quizzes,
             "best_score": best_score,
             "best_correct": int(data.get("best_correct", 0)),
             "best_total": int(data.get("best_total", 0)),
+            "history": history,
         }
 
-    def save(self, quizzes, best_score, best_correct, best_total):
+    @staticmethod
+    def _is_valid_record(record):
+        """기록 1건이 필요한 키를 모두 가지고 있는지 확인한다. (잘못된 기록은 건너뜀)"""
+        required = ("played_at", "total", "correct", "hints_used", "score")
+        return isinstance(record, dict) and all(key in record for key in required)
+
+    def save(self, quizzes, best_score, best_correct, best_total, history):
         """데이터를 UTF-8 JSON으로 저장한다.
 
         임시 파일에 먼저 쓴 뒤 os.replace로 바꿔치기해서, 저장 도중
@@ -75,6 +87,7 @@ class StateStorage:
             "best_score": best_score,
             "best_correct": best_correct,
             "best_total": best_total,
+            "history": history,
         }
         temp_path = self.path + ".tmp"
         with open(temp_path, "w", encoding=ENCODING) as file:
