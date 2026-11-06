@@ -14,6 +14,8 @@ class QuizGame:
     def __init__(self):
         self.quizzes = create_default_quizzes()
         self.best_score = None  # 아직 한 번도 풀지 않았으면 None
+        self.best_correct = 0
+        self.best_total = 0
 
         # (메뉴 이름, 실행할 메서드). 메서드가 None이면 종료
         self.menu_items = [
@@ -76,7 +78,18 @@ class QuizGame:
         print()
         print(LINE)
         print(f"🏆 결과: {total}문제 중 {correct}문제 정답! ({score}점)")
+        if self.update_best_score(score, correct, total):
+            print("🎉 새로운 최고 점수입니다!")
         print(LINE)
+
+    def update_best_score(self, score, correct, total):
+        """이번 점수가 최고 점수보다 높으면 갱신하고 True를 돌려준다."""
+        if self.best_score is None or score > self.best_score:
+            self.best_score = score
+            self.best_correct = correct
+            self.best_total = total
+            return True
+        return False
 
     def add_quiz(self):
         """문제, 선택지 4개, 정답 번호를 입력받아 새 퀴즈를 등록한다."""
@@ -104,4 +117,11 @@ class QuizGame:
         print(SUB_LINE)
 
     def show_best_score(self):
-        print("🚧 준비 중인 기능입니다.")
+        """지금까지의 최고 점수를 보여준다."""
+        if self.best_score is None:
+            print("📭 아직 퀴즈를 풀지 않았습니다. '퀴즈 풀기'로 도전해 보세요!")
+            return
+        print(
+            f"🏆 최고 점수: {self.best_score}점 "
+            f"({self.best_total}문제 중 {self.best_correct}문제 정답)"
+        )
