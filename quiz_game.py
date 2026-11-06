@@ -10,6 +10,7 @@ from storage import StateFileError
 
 LINE = "=" * 40
 SUB_LINE = "-" * 40
+HINT_CREDIT = 0.5  # 힌트를 보고 맞히면 해당 문제 점수의 50%만 인정
 
 
 class QuizGame:
@@ -125,27 +126,73 @@ class QuizGame:
         print()
         print(f"📝 퀴즈를 시작합니다! (총 {total}문제, 랜덤 출제)")
 
+        print(f"💡 힌트가 있는 문제는 'h'를 입력하면 힌트를 볼 수 있습니다. "
+              f"(힌트 사용 후 정답 시 {int(HINT_CREDIT * 100)}%만 인정)")
+
         correct = 0
+        hints_used = 0
+        earned = 0.0  # 문제당 1점, 힌트 사용 후 정답이면 HINT_CREDIT점
         for number, quiz in enumerate(selected, start=1):
             print()
             print(SUB_LINE)
             quiz.display(number)
             print()
-            user_answer = read_number("정답 입력: ", 1, len(quiz.choices))
+            used_hint = False
+            while True:
+                user_answer = self.read_answer(quiz, allow_hint=not used_hint)
+                if user_answer == "hint":
+                    used_hint = True
+                    hints_used += 1
+                    print(f"💡 힌트: {quiz.hint}")
+                    continue
+                break
+
             if quiz.is_correct(user_answer):
                 correct += 1
-                print("✅ 정답입니다!")
+                earned += HINT_CREDIT if used_hint else 1
+                print("✅ 정답입니다!" + (" (힌트 사용으로 부분 점수)" if used_hint else ""))
             else:
                 print(f"❌ 오답입니다. 정답은 {quiz.answer_text()} 입니다.")
 
-        score = round(correct / total * 100)
+        score = round(earned / total * 100)
         print()
         print(LINE)
         print(f"🏆 결과: {total}문제 중 {correct}문제 정답! ({score}점)")
+        if hints_used:
+            print(f"💡 힌트 {hints_used}회 사용 (힌트 없이 맞혔다면 {round(correct / total * 100)}점)")
         if self.update_best_score(score, correct, total):
             print("🎉 새로운 최고 점수입니다!")
             self.save_state()
         print(LINE)
+
+    def read_answer(self, quiz, allow_hint):
+        """정답 번호(1~4)를 입력받는다. 힌트를 쓸 수 있으면 'h'도 허용하고 'hint'를 돌려준다."""
+        maximum = len(quiz.choices)
+        can_hint = allow_hint and quiz.has_hint()
+        prompt = f"정답 입력 (1-{maximum}{', 힌트: h' if can_hint else ''}): "
+        guide = f"1-{maximum} 사이의 숫자를 입력하세요."
+        while True:
+            raw = input(prompt).strip()
+            if raw.lower() == "h":
+                if can_hint:
+                    return "hint"
+                if not quiz.has_hint():
+                    print("⚠️ 이 문제에는 힌트가 없습니다.")
+                else:
+                    print("⚠️ 이미 힌트를 확인했습니다.")
+                continue
+            if not raw:
+                print(f"⚠️ 빈 입력입니다. {guide}")
+                continue
+            try:
+                number = int(raw)
+            except ValueError:
+                print(f"⚠️ 잘못된 입력입니다. {guide}")
+                continue
+            if not 1 <= number <= maximum:
+                print(f"⚠️ 잘못된 입력입니다. {guide}")
+                continue
+            return number
 
     def update_best_score(self, score, correct, total):
         """이번 점수가 최고 점수보다 높으면 갱신하고 True를 돌려준다."""
@@ -163,8 +210,10 @@ class QuizGame:
         question = read_text("문제를 입력하세요: ")
         choices = [read_text(f"선택지 {i}: ") for i in range(1, CHOICE_COUNT + 1)]
         answer = read_number(f"정답 번호 (1-{CHOICE_COUNT}): ", 1, CHOICE_COUNT)
+        # 힌트는 선택 항목이라 빈 입력(Enter)을 허용한다.
+        hint = input("힌트 (없으면 Enter): ").strip()
 
-        self.quizzes.append(Quiz(question, choices, answer))
+        self.quizzes.append(Quiz(question, choices, answer, hint))
         self.save_state()
         print()
         print("✅ 퀴즈가 추가되었습니다!")
