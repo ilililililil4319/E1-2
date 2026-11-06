@@ -42,11 +42,27 @@ python main.py          # 또는 python3 main.py
 
 | 메뉴 | 기능 |
 | --- | --- |
-| 1. 퀴즈 풀기 | 등록된 퀴즈를 출제 → 정답 번호 입력 → 정답/오답 표시 → 최종 점수(100점 만점) 표시 |
-| 2. 퀴즈 추가 | 문제, 선택지 4개, 정답 번호(1~4)를 입력해 새 퀴즈 등록 후 즉시 저장 |
+| 1. 퀴즈 풀기 | 문제 수 선택 → 랜덤 출제 → 정답 번호 입력(`h`로 힌트) → 정답/오답 표시 → 최종 점수(100점 만점) |
+| 2. 퀴즈 추가 | 문제, 선택지 4개, 정답 번호(1~4), 힌트(선택)를 입력해 새 퀴즈 등록 후 즉시 저장 |
 | 3. 퀴즈 목록 | 등록된 퀴즈의 문제 목록 출력 |
 | 4. 점수 확인 | 최고 점수와 그때의 정답 수 출력 (풀이 기록이 없으면 안내) |
-| 5. 종료 | 데이터 저장 후 종료 |
+| 5. 퀴즈 삭제 | 번호 선택 → y/n 확인 → 삭제 후 즉시 저장 (0 입력 시 취소) |
+| 6. 게임 기록 | 최근 10회 게임 기록(날짜/시간, 문제 수, 정답 수, 힌트, 점수)과 평균 점수 |
+| 7. 종료 | 데이터 저장 후 종료 |
+
+### 보너스 과제 구현 내용
+
+| 보너스 | 구현 방법 |
+| --- | --- |
+| 랜덤 출제 | `random.sample(퀴즈목록, n)` — 원본 순서는 유지한 채 중복 없이 무작위로 n개 추출 |
+| 문제 수 선택 | 풀기 시작 전에 `1 ~ 전체 퀴즈 수` 범위로 입력 (범위 밖/문자 입력은 재입력) |
+| 힌트 기능 | `Quiz.hint` 속성 추가, 풀이 중 `h` 입력 시 힌트 출력 (문제당 1회) |
+| 힌트 감점 | 힌트를 본 뒤 맞히면 그 문제 점수의 **50%**만 인정 (`HINT_CREDIT = 0.5`) |
+| 퀴즈 삭제 | 확인(y/n) 후 삭제하고 즉시 `state.json`에 반영 |
+| 점수 히스토리 | 게임마다 `played_at`, `total`, `correct`, `hints_used`, `score`를 `history`에 누적 저장 |
+
+**점수 계산식**: `점수 = round((힌트 없이 맞힌 수 × 1 + 힌트 쓰고 맞힌 수 × 0.5) ÷ 푼 문제 수 × 100)`
+예) 5문제 중 4개 정답, 그중 1개는 힌트 사용 → (3 + 0.5) ÷ 5 × 100 = **70점**
 
 ### 입력/예외 처리
 
@@ -61,8 +77,8 @@ python main.py          # 또는 python3 main.py
 ```
 E1-2/
 ├── main.py              # 프로그램 시작점, state.json 경로 결정
-├── quiz.py              # Quiz 클래스: 퀴즈 1개 (출력, 정답 확인, dict 변환)
-├── quiz_game.py         # QuizGame 클래스: 메뉴, 풀기/추가/목록/점수, 저장 호출
+├── quiz.py              # Quiz 클래스: 퀴즈 1개 (출력, 정답 확인, 힌트, dict 변환)
+├── quiz_game.py         # QuizGame 클래스: 메뉴, 풀기/추가/목록/점수/삭제/기록, 저장 호출
 ├── storage.py           # StateStorage 클래스: state.json 읽기/쓰기, 손상 처리
 ├── input_utils.py       # 공통 입력 함수 (숫자/문자열/y·n 입력 검증)
 ├── default_quizzes.py   # 기본 퀴즈 데이터
@@ -84,12 +100,22 @@ E1-2/
     {
       "question": "현재 작업 중인 디렉터리의 절대 경로를 출력하는 명령어는?",
       "choices": ["ls", "cd", "pwd", "whoami"],
-      "answer": 3
+      "answer": 3,
+      "hint": "print working directory의 약자입니다."
     }
   ],
   "best_score": 86,
   "best_correct": 6,
-  "best_total": 7
+  "best_total": 7,
+  "history": [
+    {
+      "played_at": "2026-11-06 21:00:00",
+      "total": 7,
+      "correct": 6,
+      "hints_used": 0,
+      "score": 86
+    }
+  ]
 }
 ```
 
@@ -99,6 +125,21 @@ E1-2/
 | `quizzes[].question` | str | 문제 |
 | `quizzes[].choices` | list[str] | 선택지 4개 |
 | `quizzes[].answer` | int | 정답 번호 (1~4) |
+| `quizzes[].hint` | str | 힌트 (없으면 빈 문자열 `""`) |
 | `best_score` | int \| null | 최고 점수(0~100). 아직 안 풀었으면 `null` |
 | `best_correct` | int | 최고 점수 때 맞힌 문제 수 |
 | `best_total` | int | 최고 점수 때 푼 문제 수 |
+| `history` | list | 모든 게임 기록 |
+| `history[].played_at` | str | 게임 종료 시각 (`YYYY-MM-DD HH:MM:SS`) |
+| `history[].total` / `correct` | int | 푼 문제 수 / 맞힌 문제 수 |
+| `history[].hints_used` | int | 힌트 사용 횟수 |
+| `history[].score` | int | 그 게임의 점수 (0~100) |
+
+`hint`, `history`가 없는 예전 형식의 파일도 그대로 읽을 수 있습니다. (기본값: `""`, `[]`)
+
+## 7. Git 작업 흐름
+
+- 기능 단위로 커밋 (`Feat:`, `Fix:`, `Docs:`, `Chore:` 접두어 사용)
+- `feature/play-quiz` 브랜치에서 퀴즈 풀기 기능 개발 → `main`에 `--no-ff` 병합
+- `feature/bonus` 브랜치에서 보너스 기능 개발 → `main`에 `--no-ff` 병합
+- 커밋 그래프 확인: `git log --oneline --graph`
