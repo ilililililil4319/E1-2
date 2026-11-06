@@ -4,9 +4,9 @@ CHOICE_COUNT = 4
 
 
 class Quiz:
-    """문제(question), 선택지 4개(choices), 정답 번호(answer, 1~4)를 가진 퀴즈."""
+    """문제(question), 선택지 4개(choices), 정답 번호(answer, 1~4), 힌트(hint)를 가진 퀴즈."""
 
-    def __init__(self, question, choices, answer):
+    def __init__(self, question, choices, answer, hint=""):
         if len(choices) != CHOICE_COUNT:
             raise ValueError(f"선택지는 {CHOICE_COUNT}개여야 합니다.")
         if not 1 <= answer <= CHOICE_COUNT:
@@ -14,6 +14,10 @@ class Quiz:
         self.question = question
         self.choices = list(choices)
         self.answer = answer
+        self.hint = hint
+
+    def has_hint(self):
+        return bool(self.hint)
 
     def display(self, number=None):
         """문제와 선택지를 화면에 출력한다."""
@@ -38,6 +42,7 @@ class Quiz:
             "question": self.question,
             "choices": self.choices,
             "answer": self.answer,
+            "hint": self.hint,
         }
 
     @classmethod
@@ -56,4 +61,7 @@ class Quiz:
         # bool은 int의 하위 타입이라 True가 1로 통과하지 않도록 따로 막는다.
         if not isinstance(answer, int) or isinstance(answer, bool):
             raise ValueError("answer가 올바르지 않습니다.")
-        return cls(question, choices, answer)
+        hint = data.get("hint", "")  # 힌트는 선택 항목 (예전 파일에는 없을 수 있음)
+        if not isinstance(hint, str):
+            raise ValueError("hint가 문자열이 아닙니다.")
+        return cls(question, choices, answer, hint)
