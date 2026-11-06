@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 실행 중 생성되는 데이터 파일 (개인 퀴즈/점수 기록)
+state.json
+state.json.tmp
+state.json.bak
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
