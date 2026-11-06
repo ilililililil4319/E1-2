@@ -1,7 +1,8 @@
 """게임 전체(퀴즈 목록, 점수, 메뉴 흐름)를 관리하는 QuizGame 클래스."""
 
 from default_quizzes import create_default_quizzes
-from input_utils import read_number
+from input_utils import read_number, read_text
+from quiz import CHOICE_COUNT, Quiz
 
 LINE = "=" * 40
 SUB_LINE = "-" * 40
@@ -78,7 +79,16 @@ class QuizGame:
         print(LINE)
 
     def add_quiz(self):
-        print("🚧 준비 중인 기능입니다.")
+        """문제, 선택지 4개, 정답 번호를 입력받아 새 퀴즈를 등록한다."""
+        print("📌 새로운 퀴즈를 추가합니다.")
+        print()
+        question = read_text("문제를 입력하세요: ")
+        choices = [read_text(f"선택지 {i}: ") for i in range(1, CHOICE_COUNT + 1)]
+        answer = read_number(f"정답 번호 (1-{CHOICE_COUNT}): ", 1, CHOICE_COUNT)
+
+        self.quizzes.append(Quiz(question, choices, answer))
+        print()
+        print("✅ 퀴즈가 추가되었습니다!")
 
     def list_quizzes(self):
         print("🚧 준비 중인 기능입니다.")
