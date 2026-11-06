@@ -50,7 +50,32 @@ class QuizGame:
 
     # ------------------------------------------------------------------ 기능
     def play_quiz(self):
-        print("🚧 준비 중인 기능입니다.")
+        """저장된 퀴즈를 순서대로 출제하고 결과를 보여준다."""
+        if not self.quizzes:
+            print("📭 등록된 퀴즈가 없습니다. 먼저 '퀴즈 추가'로 퀴즈를 만들어 주세요.")
+            return
+
+        total = len(self.quizzes)
+        print(f"📝 퀴즈를 시작합니다! (총 {total}문제)")
+
+        correct = 0
+        for number, quiz in enumerate(self.quizzes, start=1):
+            print()
+            print(SUB_LINE)
+            quiz.display(number)
+            print()
+            user_answer = read_number("정답 입력: ", 1, len(quiz.choices))
+            if quiz.is_correct(user_answer):
+                correct += 1
+                print("✅ 정답입니다!")
+            else:
+                print(f"❌ 오답입니다. 정답은 {quiz.answer_text()} 입니다.")
+
+        score = round(correct / total * 100)
+        print()
+        print(LINE)
+        print(f"🏆 결과: {total}문제 중 {correct}문제 정답! ({score}점)")
+        print(LINE)
 
     def add_quiz(self):
         print("🚧 준비 중인 기능입니다.")
