@@ -4,7 +4,7 @@ import os
 import random
 
 from default_quizzes import create_default_quizzes
-from input_utils import read_number, read_text
+from input_utils import read_number, read_text, read_yes_no
 from quiz import CHOICE_COUNT, Quiz
 from storage import StateFileError
 
@@ -30,6 +30,7 @@ class QuizGame:
             ("퀴즈 추가", self.add_quiz),
             ("퀴즈 목록", self.list_quizzes),
             ("점수 확인", self.show_best_score),
+            ("퀴즈 삭제", self.delete_quiz),
             ("종료", None),
         ]
 
@@ -230,6 +231,29 @@ class QuizGame:
         for number, quiz in enumerate(self.quizzes, start=1):
             print(f"[{number}] {quiz.question}")
         print(SUB_LINE)
+
+    def delete_quiz(self):
+        """번호를 골라 퀴즈를 삭제하고 파일에 반영한다. 0을 입력하면 취소."""
+        if not self.quizzes:
+            print("📭 삭제할 퀴즈가 없습니다.")
+            return
+
+        self.list_quizzes()
+        index = read_number(
+            f"삭제할 퀴즈 번호 (1-{len(self.quizzes)}, 취소: 0): ", 0, len(self.quizzes)
+        )
+        if index == 0:
+            print("↩️ 삭제를 취소했습니다.")
+            return
+
+        target = self.quizzes[index - 1]
+        if not read_yes_no(f"'{target.question}' 퀴즈를 삭제할까요? (y/n): "):
+            print("↩️ 삭제를 취소했습니다.")
+            return
+
+        del self.quizzes[index - 1]
+        self.save_state()
+        print(f"🗑️ 퀴즈가 삭제되었습니다. (남은 퀴즈 {len(self.quizzes)}개)")
 
     def show_best_score(self):
         """지금까지의 최고 점수를 보여준다."""
