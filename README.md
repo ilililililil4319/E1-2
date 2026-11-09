@@ -354,9 +354,20 @@ flowchart TB
 
 ## 12. 핵심 실습 결과
 
-아래 발췌는 실행 로그에서 가져왔습니다. 전체 명령과 출력은 각 로그 링크에 있습니다.
+항목마다 두 가지 증거를 함께 붙였습니다. **숫자가 서로 다른 것은 정상**입니다.
+
+| 구분 | 어떻게 만들었나 | 사용한 데이터 |
+| --- | --- | --- |
+| 🤖 **자동 실행 로그** | `scripts/` 스크립트가 정해진 입력을 넣어 실행<br>(문제 순서 고정 `QUIZ_SEED=42`) | 실습용 `.demo/state.json`<br>매번 새로 만듦 |
+| 📸 **직접 실행 화면** | 집 PC에서 내가 키보드로 입력 | 내 기록 `state.json` |
+
+예) 퀴즈 풀기: 자동 로그는 **7문제 중 6문제(86점)**, 직접 실행은 **2문제 중 2문제(100점)**.
+점수 확인: 자동 로그는 **3문제 중 3문제**, 직접 실행은 **2문제 중 2문제**.
+전체 명령과 출력은 각 로그 링크에 있습니다.
 
 ### 12-1. 메뉴와 잘못된 입력 — [02_menu.md](docs/logs/02_menu.md), [03_input_errors.md](docs/logs/03_input_errors.md)
+
+🤖 **자동 실행 로그**
 
 ```console
 $ printf 'abc\n9\n7\n' | python3 main.py
@@ -377,11 +388,15 @@ $ sleep 3 | timeout --preserve-status -s INT 1 python3 main.py | tail -n 3; echo
 종료 코드: 0
 ```
 
+📸 **직접 실행 화면**
+
 | 메뉴 | 잘못된 입력 |
 | --- | --- |
 | ![메뉴](docs/screenshots/menu.png) | ![잘못된 입력](docs/screenshots/invalid-input.png) |
 
 ### 12-2. 퀴즈 풀기 — [06_play.md](docs/logs/06_play.md)
+
+🤖 **자동 실행 로그**
 
 ```console
 [문제 7]
@@ -396,9 +411,13 @@ Git에서 변경된 파일을 스테이징 영역(Staging Area)에 올리는 명
 ========================================
 ```
 
+📸 **직접 실행 화면**
+
 ![퀴즈 풀기](docs/screenshots/play.png)
 
 ### 12-3. 퀴즈 추가·목록 — [07_add_quiz.md](docs/logs/07_add_quiz.md), [08_list.md](docs/logs/08_list.md)
+
+🤖 **자동 실행 로그**
 
 ```console
 문제를 입력하세요:
@@ -412,11 +431,15 @@ Git에서 변경된 파일을 스테이징 영역(Staging Area)에 올리는 명
 ✅ 퀴즈가 추가되었습니다!
 ```
 
+📸 **직접 실행 화면**
+
 | 퀴즈 추가 | 퀴즈 목록 |
 | --- | --- |
 | ![퀴즈 추가](docs/screenshots/add_quiz.png) | ![퀴즈 목록](docs/screenshots/list.png) |
 
 ### 12-4. 점수 확인 — [09_score.md](docs/logs/09_score.md)
+
+🤖 **자동 실행 로그**
 
 ```console
 📭 아직 퀴즈를 풀지 않았습니다. '퀴즈 풀기'로 도전해 보세요!
@@ -424,20 +447,26 @@ Git에서 변경된 파일을 스테이징 영역(Staging Area)에 올리는 명
 🏆 최고 점수: 100점 (3문제 중 3문제 정답)
 ```
 
+📸 **직접 실행 화면**
+
 ![점수 확인](docs/screenshots/score.png)
 
 ### 12-5. state.json 저장·복구 — [11_state_json.md](docs/logs/11_state_json.md)
+
+🤖 **자동 실행 로그**
 
 ```console
 ⚠️ 데이터 파일이 손상되어 기본 퀴즈로 복구했습니다. (JSON 형식 오류: ...)
    손상된 파일은 state.json.bak로 백업했습니다.
 ```
 
-껐다 켜도 데이터가 남는다: 퀴즈 7개, 최고 점수 100점을 그대로 불러옴
+📸 **직접 실행 화면**: 껐다 켜도 데이터가 남는다 (퀴즈 7개, 최고 점수 100점을 그대로 불러옴)
 
 ![재실행](docs/screenshots/restart.png)
 
 ### 12-6. Git 이력 — [18_git_history.md](docs/logs/18_git_history.md)
+
+📸 **직접 실행 화면**
 
 | `git log --oneline --graph --all` | GitHub 저장소 |
 | --- | --- |
