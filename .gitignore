@@ -10,8 +10,21 @@ state.json
 state.json.tmp
 state.json.bak
 
+# 실습 스크립트가 쓰는 임시 데이터 (scripts/lib.sh → .demo/state.json)
+.demo/
+
+# 비밀 정보 (토큰·비밀번호·개인 키는 절대 올리지 않는다)
+.env
+.env.*
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
 # OS / Editor
 .DS_Store
 Thumbs.db
+Zone.Identifier
+*:Zone.Identifier
 .vscode/
 .idea/
