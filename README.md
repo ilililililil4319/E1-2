@@ -225,6 +225,7 @@ E1-2/
 ## 10. 작업 흐름도
 
 ```mermaid
+%%{init: {'flowchart': {'htmlLabels': false}}}%%
 flowchart TB
     subgraph R1["① 시작과 기본 구조 (main)"]
         direction LR
@@ -244,6 +245,7 @@ flowchart TB
 ## 11. 구조도
 
 ```mermaid
+%%{init: {'flowchart': {'htmlLabels': false}}}%%
 flowchart TB
     U["사용자 키보드 입력"] --> M["main.py<br/>저장 경로 결정"]
     M --> G["QuizGame<br/>메뉴와 게임 흐름"]
