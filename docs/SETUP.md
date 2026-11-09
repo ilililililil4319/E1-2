@@ -7,7 +7,7 @@ macOS/Linux라면 3번(WSL)을 건너뛰고 터미널에서 4번부터 하면 �
 
 | 도구 | 용도 | 확인 명령 |
 | --- | --- | --- |
-| WSL2 + Ubuntu | Windows 안에서 쓰는 진짜 리눅스 | `wsl -l -v` (PowerShell) |
+| WSL2 + Ubuntu | Windows 안의<br>진짜 리눅스 | `wsl -l -v` (PowerShell) |
 | Python 3.10 이상 | 퀴즈 게임 실행 | `python3 --version` |
 | Git | 버전 관리 | `git --version` |
 | VSCode + WSL 확장 | 코드 편집, WSL 터미널 | VSCode 왼쪽 아래 `WSL: Ubuntu` 표시 |

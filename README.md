@@ -41,9 +41,9 @@
 
 | 항목 | 내용 |
 | --- | --- |
-| 미션 목표 | 문법을 "아는 것"을 넘어, 입력→처리→출력→저장이 이어진 프로그램 하나를 처음부터 끝까지 완성한다 |
+| 미션 목표 | 문법을 "아는 것"을 넘어,<br>입력→처리→출력→저장이 이어진 프로그램 하나를 끝까지 완성한다 |
 | 핵심 도구 | Python 3 (표준 라이브러리만), Git, GitHub |
-| 핵심 가치 | 역할별 클래스 분리, 어떤 입력에도 죽지 않는 프로그램, 껐다 켜도 남는 데이터, 기능 단위로 남긴 Git 이력 |
+| 핵심 가치 | 역할별 클래스 분리, 어떤 입력에도 죽지 않는 프로그램,<br>껐다 켜도 남는 데이터, 기능 단위로 남긴 Git 이력 |
 
 ### 퀴즈 주제와 선정 이유
 
@@ -57,7 +57,7 @@
 
 | 메뉴 | 기능 |
 | --- | --- |
-| 1. 퀴즈 풀기 | 문제 수 선택 → 랜덤 출제 → 정답 번호 입력(`h`로 힌트) → 정답/오답 표시 → 최종 점수(100점 만점), 최고 점수 갱신 |
+| 1. 퀴즈 풀기 | 문제 수 선택 → 랜덤 출제 → 정답 번호 입력(`h`로 힌트)<br>→ 정답/오답 표시 → 최종 점수(100점 만점), 최고 점수 갱신 |
 | 2. 퀴즈 추가 | 문제, 선택지 4개, 정답 번호(1~4), 힌트(선택) 입력 → 즉시 저장 |
 | 3. 퀴즈 목록 | 등록된 퀴즈의 문제 목록 |
 | 4. 점수 확인 | 최고 점수와 그때의 정답 수 (아직 안 풀었으면 안내) |
@@ -171,21 +171,23 @@ E1-2/
 
 ## 6. 기술 스택 및 실행 환경
 
-| 도구 | 버전 (출처: [00_env.md](docs/logs/00_env.md)) | 용도 |
+| 도구 | 버전 | 용도 |
 | --- | --- | --- |
 | OS | Windows + WSL2 Ubuntu | 실행 환경 |
-| Python | 3.10 이상 (실행 로그의 실제 버전) | 게임 실행 |
+| Python | 3.10 이상<br>(실행 로그의 실제 버전) | 게임 실행 |
 | Git | 실행 로그의 실제 버전 | 버전 관리 |
 | VSCode (WSL 확장) | - | 편집, 터미널 |
-| 외부 라이브러리 | 없음 | 표준 라이브러리 `json`, `os`, `random`, `datetime`, `sys`만 사용 |
+| 외부 라이브러리 | 없음 | 표준 라이브러리만 사용<br>`json`, `os`, `random`,<br>`datetime`, `sys` |
+
+버전 출처: [00_env.md](docs/logs/00_env.md)
 
 ## 7. 사용 자료·이미지 및 출처
 
 | 자료 | 출처 | 비고 |
 | --- | --- | --- |
 | 퀴즈 문제 7개 | 직접 작성 | CLI·Git·Python·Docker 기초 |
-| Python 표준 라이브러리 | https://docs.python.org/3/library/ | `json`, `random` 등, 별도 설치 없음 |
-| 스크린샷 | 직접 캡처 | 개인정보(아이디·컴퓨터 이름) 가림 |
+| Python 표준 라이브러리 | [docs.python.org](https://docs.python.org/3/library/) | `json`, `random` 등<br>별도 설치 없음 |
+| 스크린샷 | 직접 캡처 | 아이디, 컴퓨터 이름 가림 |
 
 외부 패키지를 쓰지 않으므로 고정할 버전이 없고, Python 3.10 이상이면 같은 결과가 나옵니다.
 
@@ -200,24 +202,24 @@ E1-2/
 
 | 핵심 질문 | 확인 결과 | 증거 |
 | --- | --- | --- |
-| 잘못된 입력에도 죽지 않는가 | 공백·abc·범위 밖·빈 입력은 재입력, Ctrl+C·EOF는 저장 후 종료 코드 0 | [03_input_errors.md](docs/logs/03_input_errors.md) |
-| 껐다 켜도 데이터가 남는가 | 추가한 퀴즈·최고 점수가 재실행 후에도 유지 | [07_add_quiz.md](docs/logs/07_add_quiz.md), [09_score.md](docs/logs/09_score.md) |
-| 파일이 망가지면? | `.bak`으로 백업 후 기본 퀴즈로 복구 | [11_state_json.md](docs/logs/11_state_json.md) |
-| 클래스로 역할을 나눴는가 | `Quiz`, `QuizGame`, `StateStorage` 3개 | [10_quizgame_class.md](docs/logs/10_quizgame_class.md) |
-| 브랜치·병합, clone·pull을 했는가 | `feature/play-quiz`, `feature/bonus` 병합, 복제본 push → pull 반영 | [13_clone_pull.md](docs/logs/13_clone_pull.md), [18_git_history.md](docs/logs/18_git_history.md) |
+| 잘못된 입력에도<br>죽지 않는가 | 공백, abc, 범위 밖, 빈 입력은 재입력<br>Ctrl+C, EOF는 저장 후 종료 코드 0 | [03_input_errors.md](docs/logs/03_input_errors.md) |
+| 껐다 켜도<br>데이터가 남는가 | 추가한 퀴즈와 최고 점수가<br>재실행 후에도 유지 | [07_add_quiz.md](docs/logs/07_add_quiz.md)<br>[09_score.md](docs/logs/09_score.md) |
+| 파일이 망가지면? | `.bak`으로 백업 후<br>기본 퀴즈로 복구 | [11_state_json.md](docs/logs/11_state_json.md) |
+| 클래스로 역할을<br>나눴는가 | `Quiz`, `QuizGame`,<br>`StateStorage` 3개 | [10_quizgame_class.md](docs/logs/10_quizgame_class.md) |
+| 브랜치 병합과<br>clone, pull을 했는가 | 브랜치 2개 병합<br>복제본 push → pull 반영 | [13_clone_pull.md](docs/logs/13_clone_pull.md)<br>[18_git_history.md](docs/logs/18_git_history.md) |
 
 ## 9. 전체 작업 순서 (STEP)
 
 | STEP | 작업 | 증빙 |
 | --- | --- | --- |
-| 1 | GitHub 저장소 생성, `.gitignore`·README 첫 커밋 | [01_git_setup.md](docs/logs/01_git_setup.md) |
-| 2 | `Quiz` 클래스 → 기본 퀴즈 데이터 → 메뉴·입력 처리 | [04](docs/logs/04_quiz_class.md), [05](docs/logs/05_default_quizzes.md), [02](docs/logs/02_menu.md), [03](docs/logs/03_input_errors.md) |
-| 3 | `feature/play-quiz` 브랜치에서 퀴즈 풀기 → main 병합 | [06_play.md](docs/logs/06_play.md) |
+| 1 | GitHub 저장소 생성<br>`.gitignore`, README 첫 커밋 | [01_git_setup.md](docs/logs/01_git_setup.md) |
+| 2 | `Quiz` 클래스 → 기본 퀴즈 데이터<br>→ 메뉴, 입력 처리 | [04](docs/logs/04_quiz_class.md), [05](docs/logs/05_default_quizzes.md),<br>[02](docs/logs/02_menu.md), [03](docs/logs/03_input_errors.md) |
+| 3 | `feature/play-quiz` 브랜치에서<br>퀴즈 풀기 → main 병합 | [06_play.md](docs/logs/06_play.md) |
 | 4 | 퀴즈 추가 → 목록 → 점수 | [07](docs/logs/07_add_quiz.md), [08](docs/logs/08_list.md), [09](docs/logs/09_score.md) |
-| 5 | `state.json` 저장/불러오기, 손상 복구, Ctrl+C·EOF 처리 | [11_state_json.md](docs/logs/11_state_json.md) |
-| 6 | `feature/bonus` 브랜치에서 보너스 5종 → main 병합 | [14](docs/logs/14_bonus_random_count.md)~[17](docs/logs/17_bonus_history.md) |
+| 5 | `state.json` 저장/불러오기, 손상 복구<br>Ctrl+C, EOF 처리 | [11_state_json.md](docs/logs/11_state_json.md) |
+| 6 | `feature/bonus` 브랜치에서<br>보너스 5종 → main 병합 | [14](docs/logs/14_bonus_random_count.md)~[17](docs/logs/17_bonus_history.md) |
 | 7 | 코드를 `app/`로 분리, 실습 스크립트 추가 | [10_quizgame_class.md](docs/logs/10_quizgame_class.md) |
-| 8 | README 작성, clone/pull 실습 | [12_readme.md](docs/logs/12_readme.md), [13_clone_pull.md](docs/logs/13_clone_pull.md) |
+| 8 | README 작성, clone/pull 실습 | [12_readme.md](docs/logs/12_readme.md)<br>[13_clone_pull.md](docs/logs/13_clone_pull.md) |
 | 9 | 전체 Git 이력 확인 | [18_git_history.md](docs/logs/18_git_history.md) |
 
 ## 10. 작업 흐름도
@@ -344,12 +346,12 @@ Git에서 변경된 파일을 스테이징 영역(Staging Area)에 올리는 명
 
 | 과제 | 수행 내용 | 확인 결과 | 달성 |
 | --- | --- | --- | --- |
-| 랜덤 출제 | `random.sample(퀴즈목록, n)`: 원본 순서는 그대로 두고 중복 없이 무작위 추출 | 시드 1과 2의 문제 순서가 다름 ([14](docs/logs/14_bonus_random_count.md)) | ✅ |
-| 문제 수 선택 | 풀기 전에 1~전체 개수 입력, 범위 밖은 재입력 | 0, 99 거부 후 3문제 출제 ([14](docs/logs/14_bonus_random_count.md)) | ✅ |
-| 힌트 | `Quiz.hint` 추가, 풀이 중 `h` 입력 시 출력(문제당 1회) | 힌트 없는 문제·중복 요청 안내 ([15](docs/logs/15_bonus_hint.md)) | ✅ |
-| 힌트 감점 | 힌트 본 문제는 맞혀도 50% (`HINT_CREDIT = 0.5`) | 2문제 중 1개 힌트 → 75점 ([15](docs/logs/15_bonus_hint.md)) | ✅ |
-| 퀴즈 삭제 | 번호 선택 → y/n 확인 → 삭제 후 즉시 저장 | 7개 → 6개, 재실행 후에도 6개 ([16](docs/logs/16_bonus_delete.md)) | ✅ |
-| 점수 히스토리 | 판마다 `played_at`, `total`, `correct`, `hints_used`, `score` 저장 | 3판 기록·평균 점수 ([17](docs/logs/17_bonus_history.md)) | ✅ |
+| 랜덤 출제 | `random.sample(퀴즈목록, n)`<br>원본 순서는 두고 중복 없이 추출 | 시드 1, 2의<br>문제 순서가 다름 | ✅ [로그](docs/logs/14_bonus_random_count.md) |
+| 문제 수 선택 | 풀기 전에 1~전체 개수 입력<br>범위 밖은 재입력 | 0, 99 거부 후<br>3문제 출제 | ✅ [로그](docs/logs/14_bonus_random_count.md) |
+| 힌트 | `Quiz.hint` 추가<br>풀이 중 `h` 입력 시 출력 (문제당 1회) | 힌트 없는 문제,<br>중복 요청 안내 | ✅ [로그](docs/logs/15_bonus_hint.md) |
+| 힌트 감점 | 힌트 본 문제는 맞혀도 50%<br>`HINT_CREDIT = 0.5` | 2문제 중 1개 힌트<br>→ 75점 | ✅ [로그](docs/logs/15_bonus_hint.md) |
+| 퀴즈 삭제 | 번호 선택 → y/n 확인<br>→ 삭제 후 즉시 저장 | 7개 → 6개<br>재실행 후에도 6개 | ✅ [로그](docs/logs/16_bonus_delete.md) |
+| 점수 히스토리 | 판마다 `played_at`, `total`, `correct`,<br>`hints_used`, `score` 저장 | 3판 기록,<br>평균 점수 | ✅ [로그](docs/logs/17_bonus_history.md) |
 
 점수 계산식: `점수 = round((힌트 없이 맞힌 수 × 1 + 힌트 쓰고 맞힌 수 × 0.5) ÷ 푼 문제 수 × 100)`
 
@@ -371,10 +373,10 @@ bash scripts/run_all.sh    # 실습 스크립트 전체 실행 → docs/logs/ �
 
 | 이름 | 기본값 | 설명 |
 | --- | --- | --- |
-| `QUIZ_STATE_PATH` | `<프로젝트 루트>/state.json` | 데이터 파일 경로. 실습 스크립트는 `.demo/state.json`을 써서 실제 기록을 건드리지 않는다 |
-| `QUIZ_SEED` | 없음(매번 랜덤) | 랜덤 출제 순서 고정. 스크립트는 `42` |
-| `PYTHON` | `python3` | 스크립트가 사용할 Python 명령 |
-| `CLONE_URL` | `origin` 주소 | 13번 스크립트가 clone 할 주소 |
+| `QUIZ_STATE_PATH` | 루트의 `state.json` | 데이터 파일 경로<br>스크립트는 `.demo/state.json` 사용<br>(실제 기록 보호) |
+| `QUIZ_SEED` | 없음 (매번 랜덤) | 랜덤 출제 순서 고정<br>스크립트는 `42` |
+| `PYTHON` | `python3` | 스크립트가 사용할<br>Python 명령 |
+| `CLONE_URL` | `origin` 주소 | 13번 스크립트가<br>clone 할 주소 |
 
 ### 데이터 파일 설명 (state.json)
 
@@ -410,9 +412,9 @@ bash scripts/run_all.sh    # 실습 스크립트 전체 실행 → docs/logs/ �
 | `quizzes[].choices` | list[str] | 선택지 4개 |
 | `quizzes[].answer` | int | 정답 번호 (1~4) |
 | `quizzes[].hint` | str | 힌트 (없으면 `""`) |
-| `best_score` | int \| null | 최고 점수(0~100), 아직 안 풀었으면 `null` |
-| `best_correct` / `best_total` | int | 최고 점수 때 맞힌 수 / 푼 수 |
-| `history[]` | list | 판마다 날짜/시간, 푼 문제 수, 정답 수, 힌트 수, 점수 |
+| `best_score` | int \| null | 최고 점수(0~100)<br>아직 안 풀었으면 `null` |
+| `best_correct`<br>`best_total` | int | 최고 점수 때<br>맞힌 수 / 푼 수 |
+| `history[]` | list | 판마다 날짜/시간, 푼 문제 수,<br>정답 수, 힌트 수, 점수 |
 
 `hint`, `history`가 없는 예전 형식 파일도 읽을 수 있습니다. (기본값 `""`, `[]`)
 
@@ -443,10 +445,10 @@ bash scripts/run_all.sh    # 실습 스크립트 전체 실행 → docs/logs/ �
 
 | 사용 작업 | 이유 | 검증 방법 |
 | --- | --- | --- |
-| 코드·스크립트 초안 | 구조를 빠르게 잡고 요구사항을 빠짐없이 매핑하기 위해 | 스크립트 실행 결과(✅/❌)와 직접 실행으로 확인 |
-| 오류 원인 분석 (16장) | 종료 코드 141처럼 처음 보는 오류의 원인 찾기 | 원인 가설을 명령으로 다시 확인한 뒤 수정 |
-| README·SETUP 문서 초안 | 21개 목차 형식 맞추기 | 실행 로그의 실제 값과 대조 |
-| 학습 정리 | 용어·명령을 초보자 눈높이로 이해하기 | 핵심 질문(2장)을 내 말로 설명해 보기 |
+| 코드, 스크립트 초안 | 구조를 빠르게 잡고<br>요구사항을 빠짐없이 매핑 | 스크립트 결과(✅/❌)와<br>직접 실행으로 확인 |
+| 오류 원인 분석 (16장) | 종료 코드 141처럼<br>처음 보는 오류의 원인 찾기 | 원인 가설을 명령으로<br>다시 확인한 뒤 수정 |
+| README, SETUP 초안 | 22개 목차 형식 맞추기 | 실행 로그의 실제 값과 대조 |
+| 학습 정리 | 용어와 명령을<br>초보자 눈높이로 이해 | 핵심 질문(2장)을<br>내 말로 설명해 보기 |
 
 설치, 스크립트 실행, 화면 캡처, 커밋·push는 직접 했습니다.
 
@@ -454,20 +456,20 @@ bash scripts/run_all.sh    # 실습 스크립트 전체 실행 → docs/logs/ �
 
 | 요구사항 | 구현 위치 | 달성 |
 | --- | --- | --- |
-| 1. Git 저장소 설정 (.gitignore, README, 첫 commit·push) | `.gitignore`, `README.md`, 첫 커밋 | ✅ |
-| 2. 메뉴 (출력, 선택, 종료, 잘못된 입력) | `QuizGame.run/show_menu`, `menu_items` | ✅ |
-| 3. 공통 입력/예외 (공백, abc, 범위 밖, 빈 입력, Ctrl+C, EOF, 파일 없음/손상) | `input_utils.py`, `QuizGame.run/load_state` | ✅ |
-| 4. Quiz 클래스 (question, choices 4개, answer 1~4, 출력·정답 확인) | `app/quiz.py` | ✅ |
-| 5. 기본 퀴즈 5개 이상 (Quiz 인스턴스) | `app/default_quizzes.py` (7개) | ✅ |
-| 6. 퀴즈 풀기 + 브랜치 (`feature/play-quiz` → main) | `QuizGame.play_quiz` | ✅ |
+| 1. Git 저장소 설정<br>(.gitignore, README, 첫 commit, push) | `.gitignore`, `README.md`<br>첫 커밋 | ✅ |
+| 2. 메뉴<br>(출력, 선택, 종료, 잘못된 입력) | `QuizGame.run`, `show_menu`<br>`menu_items` | ✅ |
+| 3. 공통 입력/예외<br>(공백, abc, 범위 밖, 빈 입력,<br>Ctrl+C, EOF, 파일 없음/손상) | `input_utils.py`<br>`QuizGame.run`, `load_state` | ✅ |
+| 4. Quiz 클래스<br>(question, choices 4개, answer 1~4,<br>출력, 정답 확인) | `app/quiz.py` | ✅ |
+| 5. 기본 퀴즈 5개 이상<br>(Quiz 인스턴스) | `app/default_quizzes.py` (7개) | ✅ |
+| 6. 퀴즈 풀기 + 브랜치<br>(`feature/play-quiz` → main) | `QuizGame.play_quiz` | ✅ |
 | 7. 퀴즈 추가 + 파일 저장 | `QuizGame.add_quiz` | ✅ |
 | 8. 퀴즈 목록 + 없음 처리 | `QuizGame.list_quizzes` | ✅ |
-| 9. 점수 확인·갱신·저장 + 미풀이 처리 | `QuizGame.update_best_score/show_best_score` | ✅ |
-| 10. QuizGame 클래스 (목록·최고 점수, 기능별 메서드) | `app/quiz_game.py` | ✅ |
-| 11. state.json 저장/불러오기 (UTF-8, try/except) | `app/storage.py` | ✅ |
+| 9. 점수 확인, 갱신, 저장<br>+ 미풀이 처리 | `QuizGame.update_best_score`<br>`QuizGame.show_best_score` | ✅ |
+| 10. QuizGame 클래스<br>(목록, 최고 점수, 기능별 메서드) | `app/quiz_game.py` | ✅ |
+| 11. state.json 저장/불러오기<br>(UTF-8, try/except) | `app/storage.py` | ✅ |
 | 12. README 필수 항목 | 이 문서 1·3·4·14·15장 | ✅ |
 | 13. clone/pull 실습 | `scripts/13_clone_pull.sh` | ✅ |
-| 커밋 10개 이상, Git 7종 명령 | [18_git_history.md](docs/logs/18_git_history.md) | ✅ |
+| 커밋 10개 이상<br>Git 7종 명령 | [18_git_history.md](docs/logs/18_git_history.md) | ✅ |
 
 ## 19. 결론 및 한계점
 
@@ -484,15 +486,15 @@ bash scripts/run_all.sh    # 실습 스크립트 전체 실행 → docs/logs/ �
 
 | 결정 | 이유 | 검토한 대안 |
 | --- | --- | --- |
-| 클래스 3개 (`Quiz`/`QuizGame`/`StateStorage`) | 저장 방식이 바뀌어도 게임 코드는 그대로 | 2개(QuizGame이 저장까지): 요구는 충족하지만 한 클래스가 너무 커짐 |
-| 정답을 번호(1~4)로 저장 | 미션 권장, 입력·비교가 단순 | 정답 문자열 저장: 선택지 글자를 고치면 정답이 깨짐 |
-| JSON 파일 1개 (`state.json`) | 미션 요구, 사람이 읽고 고칠 수 있음 | SQLite: 안전하지만 표준 문법 학습 범위를 넘음 |
-| 임시 파일에 쓴 뒤 `os.replace` | 저장 중 꺼져도 기존 파일 보존 | 바로 덮어쓰기: 간단하지만 중간에 끊기면 파일 손상 |
-| 손상 파일은 `.bak`으로 백업 후 초기화 | 데이터를 버리지 않고 원인 확인 가능 | 바로 삭제: 복구 불가 |
-| `random.sample` | 원본 순서를 지키면서 n개만 뽑기를 한 번에 | `random.shuffle` 후 자르기: 원본 리스트 순서가 바뀜 |
-| 힌트 감점 50% | 힌트를 쓰면 손해지만 0점은 아니게 | 고정 감점(-10점): 문제 수에 따라 비중이 달라짐 |
-| 실습 스크립트 + `.md` 로그 | 명령과 출력을 빠짐없이 남기고 다시 실행 가능 | 손으로 실행 후 캡처: 빠지는 명령이 생기고 재현이 어려움 |
-| `QUIZ_SEED`, `QUIZ_STATE_PATH` | 같은 결과 재현, 실제 기록 보호 | 코드 안에 테스트용 분기: 실제 동작과 테스트 동작이 달라짐 |
+| 클래스 3개로 분리 | 저장 방식이 바뀌어도<br>게임 코드는 그대로 | 2개(QuizGame이 저장까지)<br>→ 한 클래스가 너무 커짐 |
+| 정답을 번호(1~4)로 저장 | 미션 권장,<br>입력과 비교가 단순 | 정답 문자열 저장<br>→ 선택지를 고치면 정답이 깨짐 |
+| JSON 파일 1개 | 미션 요구,<br>사람이 읽고 고칠 수 있음 | SQLite<br>→ 학습 범위를 넘음 |
+| 임시 파일에 쓴 뒤<br>`os.replace` | 저장 중 꺼져도<br>기존 파일 보존 | 바로 덮어쓰기<br>→ 중간에 끊기면 파일 손상 |
+| 손상 파일은 `.bak`으로<br>백업 후 초기화 | 데이터를 버리지 않고<br>원인 확인 가능 | 바로 삭제<br>→ 복구 불가 |
+| `random.sample` | 원본 순서를 지키면서<br>n개만 한 번에 뽑기 | `random.shuffle` 후 자르기<br>→ 원본 순서가 바뀜 |
+| 힌트 감점 50% | 힌트를 쓰면 손해지만<br>0점은 아니게 | 고정 감점(-10점)<br>→ 문제 수에 따라 비중이 달라짐 |
+| 실습 스크립트 + `.md` 로그 | 명령과 출력을 빠짐없이,<br>다시 실행 가능 | 손으로 실행 후 캡처<br>→ 빠지는 명령, 재현 어려움 |
+| `QUIZ_SEED`<br>`QUIZ_STATE_PATH` | 같은 결과 재현,<br>실제 기록 보호 | 코드 안에 테스트용 분기<br>→ 실제 동작과 달라짐 |
 
 ## 20. 보안 유의사항
 
