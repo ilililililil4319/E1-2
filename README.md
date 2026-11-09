@@ -225,7 +225,7 @@ E1-2/
 ## 10. 작업 흐름도
 
 ```mermaid
-%%{init: {'flowchart': {'htmlLabels': false}}}%%
+%%{init: {'flowchart': {'htmlLabels': false, 'padding': 24}}}%%
 flowchart TB
     subgraph R1["① 시작과 기본 구조 (main)"]
         direction LR
@@ -245,15 +245,15 @@ flowchart TB
 ## 11. 구조도
 
 ```mermaid
-%%{init: {'flowchart': {'htmlLabels': false}}}%%
+%%{init: {'flowchart': {'htmlLabels': false, 'padding': 24}}}%%
 flowchart TB
-    U["사용자 키보드 입력"] --> M["main.py<br/>저장 경로 결정"]
-    M --> G["QuizGame<br/>메뉴와 게임 흐름"]
+    U["사용자 키보드<br/>입력"] --> M["main.py<br/>저장 경로 결정"]
+    M --> G["QuizGame<br/>메뉴와<br/>게임 흐름"]
     G -->|입력 검증| I["input_utils<br/>ask, read_number"]
-    G -->|퀴즈 보유| Q["Quiz<br/>문제, 선택지, 정답, 힌트"]
-    G -->|저장, 불러오기| S["StateStorage<br/>JSON 읽기, 쓰기"]
+    G -->|퀴즈 보유| Q["Quiz<br/>문제, 선택지<br/>정답, 힌트"]
+    G -->|"저장<br/>불러오기"| S["StateStorage<br/>JSON 읽기, 쓰기"]
     S <--> F[("state.json<br/>UTF-8")]
-    D["default_quizzes<br/>기본 퀴즈"] -->|파일 없음, 손상| G
+    D["default_quizzes<br/>기본 퀴즈"] -->|"파일 없음<br/>또는 손상"| G
 ```
 
 **설계 노트**
