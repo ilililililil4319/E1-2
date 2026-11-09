@@ -223,28 +223,33 @@ E1-2/
 ## 9. 작업 흐름도
 
 ```mermaid
-flowchart LR
-    A[저장소 생성<br/>첫 커밋] --> B[Quiz 클래스<br/>기본 데이터]
-    B --> C[메뉴<br/>입력 처리]
-    C --> D[feature/play-quiz<br/>퀴즈 풀기]
-    D -->|merge| E[추가·목록·점수]
-    E --> F[state.json<br/>저장·복구]
-    F --> G[feature/bonus<br/>보너스 5종]
-    G -->|merge| H[app/ 분리<br/>스크립트]
-    H --> I[README<br/>clone·pull]
+flowchart TB
+    subgraph R1["① 시작과 기본 구조 (main)"]
+        direction LR
+        A["저장소 생성<br/>첫 커밋"] --> B["Quiz 클래스<br/>기본 퀴즈 7개"] --> C["메뉴와<br/>입력 처리"]
+    end
+    subgraph R2["② 핵심 기능 (feature/play-quiz)"]
+        direction LR
+        D["퀴즈 풀기<br/>브랜치 병합"] --> E["추가, 목록<br/>점수 확인"] --> F["state.json<br/>저장과 복구"]
+    end
+    subgraph R3["③ 보너스와 마무리 (feature/bonus)"]
+        direction LR
+        G["보너스 5종<br/>브랜치 병합"] --> H["app/ 분리<br/>실습 스크립트"] --> I["README<br/>clone과 pull"]
+    end
+    R1 --> R2 --> R3
 ```
 
 ## 10. 구조도
 
 ```mermaid
 flowchart TB
-    U[사용자 키보드 입력] --> M[main.py<br/>경로 결정]
-    M --> G[QuizGame<br/>메뉴·게임 흐름]
-    G -->|입력 검증| I[input_utils<br/>ask·read_number]
-    G -->|퀴즈 여러 개 보유| Q[Quiz<br/>문제·선택지·정답·힌트]
-    G -->|저장·불러오기 요청| S[StateStorage<br/>JSON 읽기·쓰기]
-    S <--> F[(state.json<br/>UTF-8)]
-    D[default_quizzes] -->|파일 없음·손상| G
+    U["사용자 키보드 입력"] --> M["main.py<br/>저장 경로 결정"]
+    M --> G["QuizGame<br/>메뉴와 게임 흐름"]
+    G -->|입력 검증| I["input_utils<br/>ask, read_number"]
+    G -->|퀴즈 보유| Q["Quiz<br/>문제, 선택지, 정답, 힌트"]
+    G -->|저장, 불러오기| S["StateStorage<br/>JSON 읽기, 쓰기"]
+    S <--> F[("state.json<br/>UTF-8")]
+    D["default_quizzes<br/>기본 퀴즈"] -->|파일 없음, 손상| G
 ```
 
 **설계 노트**
