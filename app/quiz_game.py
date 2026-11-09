@@ -5,7 +5,7 @@ import random
 from datetime import datetime
 
 from .default_quizzes import create_default_quizzes
-from .input_utils import read_number, read_text, read_yes_no
+from .input_utils import ask, read_number, read_text, read_yes_no
 from .quiz import CHOICE_COUNT, Quiz
 from .storage import StateFileError
 
@@ -181,7 +181,7 @@ class QuizGame:
         prompt = f"정답 입력 (1-{maximum}{', 힌트: h' if can_hint else ''}): "
         guide = f"1-{maximum} 사이의 숫자를 입력하세요."
         while True:
-            raw = input(prompt).strip()
+            raw = ask(prompt).strip()
             if raw.lower() == "h":
                 if can_hint:
                     return "hint"
@@ -230,7 +230,7 @@ class QuizGame:
         choices = [read_text(f"선택지 {i}: ") for i in range(1, CHOICE_COUNT + 1)]
         answer = read_number(f"정답 번호 (1-{CHOICE_COUNT}): ", 1, CHOICE_COUNT)
         # 힌트는 선택 항목이라 빈 입력(Enter)을 허용한다.
-        hint = input("힌트 (없으면 Enter): ").strip()
+        hint = ask("힌트 (없으면 Enter): ").strip()
 
         self.quizzes.append(Quiz(question, choices, answer, hint))
         self.save_state()
