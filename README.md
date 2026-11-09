@@ -603,3 +603,4 @@ bash scripts/run_all.sh    # 실습 스크립트 전체 실행 → docs/logs/ �
 - 커밋 메시지 규칙: `Feat:` 기능, `Fix:` 버그 수정, `Docs:` 문서, `Refactor:` 구조 개선, `Chore:` 설정
 - Python 튜토리얼: https://docs.python.org/ko/3/tutorial/
 - Pro Git (한국어): https://git-scm.com/book/ko/v2
+- clone/pull 실습: 복제본(E1-2-copy)에서 이 줄을 추가하고 push → 원래 폴더에서 pull로 받음
