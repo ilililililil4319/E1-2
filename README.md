@@ -151,23 +151,108 @@ E1-2/
 
 ## 5. 용어 설명 (초보자를 위한 참고)
 
-| 분야 | 용어/명령 | 뜻 |
-| --- | --- | --- |
-| Python | 클래스 / 객체 | 설계도 / 설계도로 만든 실제 물건 |
-| Python | 속성 / 메서드 | 객체가 가진 값 / 객체가 할 수 있는 일 |
-| Python | `__init__`, `self` | 객체가 태어날 때 실행되는 준비 함수 / 객체 자기 자신 |
-| Python | 예외(Exception) | 실행 중 생긴 문제. `try/except`로 잡아서 처리 |
-| Python | JSON | 사람이 읽을 수 있는 데이터 저장 형식 (`{"키": 값}`) |
-| Python | UTF-8 | 한글을 포함한 전 세계 글자를 저장하는 방식 |
-| Python | 영속성 | 프로그램을 껐다 켜도 데이터가 남는 것 |
-| Git | 커밋 | 지금 상태를 이력으로 저장한 한 장의 사진 |
-| Git | 스테이징 (`add`) | 다음 커밋에 넣을 파일을 담아 두는 것 |
-| Git | 브랜치 | 원본을 건드리지 않고 따로 작업하는 갈래 |
-| Git | 병합 (`merge`) | 갈래에서 한 작업을 합치는 것 |
-| Git | 원격 저장소 (`origin`) | GitHub에 있는 저장소 |
-| CLI | 파이프 `\|` | 앞 명령의 출력을 뒤 명령의 입력으로 넘김 |
-| CLI | `printf '1\n7\n'` | 줄바꿈이 섞인 글자를 만들어 프로그램 입력으로 보냄 |
-| CLI | 종료 코드 | 0이면 성공, 0이 아니면 실패 |
+이 미션에서 새로 쓴 용어와 명령을 정리했습니다. E1-1에서 설명한 기본 명령(`pwd`, `ls`, `cd`, `mkdir`, `touch`, `cat`, `cp`, `mv`, `rm`, `chmod`, `git` $`\color{red}{\vee}`$ `add`, `git` $`\color{red}{\vee}`$ `commit`, `git` $`\color{red}{\vee}`$ `push`, `git` $`\color{red}{\vee}`$ `clone` 등)은 [E1-1 README 5장](https://github.com/ilililililil4319/E1-1#5-용어-설명-초보자를-위한-참고)에 있습니다.
+
+> **읽는 법**: `[` $`\color{red}{\vee}`$ `]` 안은 소리 내어 읽는 방법
+> **띄어쓰기 표시**: 명령 사이의 붉은 $`\color{red}{\vee}`$ 는 **띄어쓰기 한 칸**입니다. 예) `git` $`\color{red}{\vee}`$ `add` $`\color{red}{\vee}`$ `.` = 깃 / 띄어쓰기 / 애드 / 띄어쓰기 / 점
+
+### 5-1. Python
+
+| 용어 / 코드 [읽는 법] | 뜻 |
+| --- | --- |
+| 클래스 / 객체<br>[클래스 / 오브젝트] | 설계도 / 설계도로 만든 실제 물건 |
+| 속성 / 메서드<br>[애트리뷰트 / 메서드] | 객체가 가진 값 / 객체가 할 수 있는 일 |
+| `__init__`<br>[던더 이닛] | 객체가 만들어질 때 자동으로 실행되는 준비 함수 |
+| `self`<br>[셀프] | 객체 자기 자신 |
+| 예외 (Exception)<br>[익셉션] | 실행 중 생긴 문제 |
+| `try` / `except`<br>[트라이 / 익셉트] | 예외를 잡아서 처리하는 안전망 |
+| `ValueError`<br>[밸류 에러] | 값이 잘못됨 (`int("abc")`) |
+| `KeyboardInterrupt`<br>[키보드 인터럽트] | Ctrl+C로 중단함 |
+| `EOFError`<br>[이오에프 에러] | 입력이 끝남 (Ctrl+D, 파이프 입력 끝) |
+| JSON<br>[제이슨] | 사람이 읽을 수 있는 데이터 저장 형식 (`{"키":` $`\color{red}{\vee}`$ `값}`) |
+| `json.load` / `json.dump`<br>[제이슨 점 로드 / 덤프] | 파일에서 읽기 / 파일에 쓰기 |
+| UTF-8<br>[유티에프 팔] | 한글을 포함한 전 세계 글자를 저장하는 방식 |
+| 영속성 | 프로그램을 껐다 켜도 데이터가 남는 것 |
+| `random.sample`<br>[랜덤 점 샘플] | 원본은 그대로 두고 겹치지 않게 n개 뽑기 |
+| `input().strip()`<br>[인풋 점 스트립] | 입력받은 글자의 앞뒤 공백 지우기 |
+| `if` $`\color{red}{\vee}`$ `__name__` $`\color{red}{\vee}`$ `==` $`\color{red}{\vee}`$ `"__main__":`<br>[이프 던더 네임 … 던더 메인] | 이 파일을 직접 실행할 때만 아래 코드 실행 |
+
+### 5-2. 터미널 (E1-1에 없던 명령)
+
+| 명령 [읽는 법] | 뜻 |
+| --- | --- |
+| `head` $`\color{red}{\vee}`$ `-n` $`\color{red}{\vee}`$ `5` $`\color{red}{\vee}`$ `state.json`<br>[헤드 대시 엔] | 파일 앞부분만 보기 (기본 10줄) |
+| `tail` $`\color{red}{\vee}`$ `-f` $`\color{red}{\vee}`$ `app.log`<br>[테일 대시 에프] | 파일 뒷부분 보기<br>`-f`는 새로 추가되는 줄을 계속 보여 줌 |
+| `grep` $`\color{red}{\vee}`$ `-n` $`\color{red}{\vee}`$ `"def"` $`\color{red}{\vee}`$ `app/quiz_game.py`<br>[그렙 대시 엔] | 파일에서 글자가 있는 줄 찾기<br>`-n`은 줄 번호 표시 |
+| `find` $`\color{red}{\vee}`$ `.` $`\color{red}{\vee}`$ `-name` $`\color{red}{\vee}`$ `"*.py"`<br>[파인드 점 대시 네임] | 이름 조건으로 파일 찾기 |
+| `wc` $`\color{red}{\vee}`$ `-l` $`\color{red}{\vee}`$ `main.py`<br>[더블유씨(워드 카운트) 대시 엘] | 줄 수 세기 |
+| `echo` $`\color{red}{\vee}`$ `"state.json"` $`\color{red}{\vee}`$ `>>` $`\color{red}{\vee}`$ `.gitignore`<br>[에코 … 어펜드] | 글자를 파일 끝에 이어 쓰기 |
+| `printf` $`\color{red}{\vee}`$ `'1\n7\n'`<br>[프린트에프] | 줄바꿈(`\n`)이 섞인 글자 만들기<br>파이프로 입력을 보낼 때 사용 |
+| `echo` $`\color{red}{\vee}`$ `$?`<br>[에코 달러 물음표] | 바로 앞 명령의 종료 코드 (0 = 성공) |
+| `which` $`\color{red}{\vee}`$ `python3`<br>[위치 파이썬쓰리] | 명령 실행 파일이 있는 위치 |
+| `python3` $`\color{red}{\vee}`$ `main.py`<br>[파이썬쓰리 메인 점 파이] | 파이썬 파일 실행 |
+| `python3` $`\color{red}{\vee}`$ `-m` $`\color{red}{\vee}`$ `json.tool` $`\color{red}{\vee}`$ `state.json`<br>[파이썬쓰리 대시 엠 제이슨 점 툴] | JSON을 보기 좋게 출력하고 문법 검사 |
+| `python3` $`\color{red}{\vee}`$ `-m` $`\color{red}{\vee}`$ `venv` $`\color{red}{\vee}`$ `.venv`<br>[파이썬쓰리 대시 엠 벤브] | 가상환경 만들기 |
+| `source` $`\color{red}{\vee}`$ `.venv/bin/activate`<br>[소스 … 액티베이트] | 가상환경 켜기 (끄기: `deactivate`) |
+| `export` $`\color{red}{\vee}`$ `QUIZ_SEED=42`<br>[익스포트] | 환경 변수 설정<br>(이 터미널을 닫을 때까지) |
+| `bash` $`\color{red}{\vee}`$ `scripts/run_all.sh`<br>[배시] | 셸 스크립트 실행 |
+| `timeout` $`\color{red}{\vee}`$ `-s` $`\color{red}{\vee}`$ `INT` $`\color{red}{\vee}`$ `1` $`\color{red}{\vee}`$ `python3` $`\color{red}{\vee}`$ `main.py`<br>[타임아웃 대시 에스 인트] | 1초 뒤 Ctrl+C와 같은 신호 보내기 |
+| `rm` $`\color{red}{\vee}`$ `-rf` $`\color{red}{\vee}`$ `.demo`<br>[알엠 대시 알에프] | 폴더를 확인 없이 통째로 삭제 |
+| `code` $`\color{red}{\vee}`$ `.`<br>[코드 점] | VSCode로 현재 폴더 열기 |
+| `clear`<br>[클리어] | 터미널 화면 지우기 |
+| 종료 코드<br>[엑시트 코드] | 명령의 성적표. 0이면 성공, 0이 아니면 실패 |
+
+### 5-3. Git (E1-1에 없던 명령)
+
+| 명령 [읽는 법] | 뜻 |
+| --- | --- |
+| `git` $`\color{red}{\vee}`$ `diff`<br>[깃 디프] | 스테이징 전 변경 내용 보기 |
+| `git` $`\color{red}{\vee}`$ `diff` $`\color{red}{\vee}`$ `--staged`<br>[깃 디프 대시대시 스테이지드] | 스테이징한(커밋할) 변경 내용 보기 |
+| `git` $`\color{red}{\vee}`$ `commit` $`\color{red}{\vee}`$ `-am` $`\color{red}{\vee}`$ `"메시지"`<br>[깃 커밋 대시 에이엠] | 추적 중인 파일을 add + commit 한 번에 |
+| `git` $`\color{red}{\vee}`$ `commit` $`\color{red}{\vee}`$ `--amend`<br>[깃 커밋 대시대시 어멘드] | 직전 커밋 고치기 |
+| `git` $`\color{red}{\vee}`$ `restore` $`\color{red}{\vee}`$ `quiz.py`<br>[깃 리스토어] | 수정 내용 버리고 마지막 커밋으로 |
+| `git` $`\color{red}{\vee}`$ `restore` $`\color{red}{\vee}`$ `--staged` $`\color{red}{\vee}`$ `state.json`<br>[깃 리스토어 대시대시 스테이지드] | 스테이징만 취소 (파일 내용은 그대로) |
+| `git` $`\color{red}{\vee}`$ `rm` $`\color{red}{\vee}`$ `--cached` $`\color{red}{\vee}`$ `state.json`<br>[깃 알엠 대시대시 캐시드] | 파일은 두고 Git 추적만 중지 |
+| `git` $`\color{red}{\vee}`$ `log` $`\color{red}{\vee}`$ `--oneline` $`\color{red}{\vee}`$ `--graph`<br>[깃 로그 대시대시 원라인 대시대시 그래프] | 커밋을 한 줄씩 + 브랜치 갈래 그림 |
+| `git` $`\color{red}{\vee}`$ `show` $`\color{red}{\vee}`$ `HEAD`<br>[깃 쇼 헤드] | 커밋 하나의 변경 내용 |
+| `git` $`\color{red}{\vee}`$ `reflog`<br>[깃 리플로그] | 내 PC에서 한 Git 동작 기록 (clone, pull, checkout) |
+| `git` $`\color{red}{\vee}`$ `rev-list` $`\color{red}{\vee}`$ `--count` $`\color{red}{\vee}`$ `HEAD`<br>[깃 레브리스트 대시대시 카운트 헤드] | 커밋 개수 |
+| `git` $`\color{red}{\vee}`$ `branch` $`\color{red}{\vee}`$ `-a`<br>[깃 브랜치 대시 에이] | 원격까지 모든 브랜치 목록 |
+| `git` $`\color{red}{\vee}`$ `checkout` $`\color{red}{\vee}`$ `-b` $`\color{red}{\vee}`$ `feature/x`<br>[깃 체크아웃 대시 비] | 브랜치를 만들고 바로 이동 |
+| `git` $`\color{red}{\vee}`$ `switch` $`\color{red}{\vee}`$ `-c` $`\color{red}{\vee}`$ `feature/x`<br>[깃 스위치 대시 씨] | 위와 같음 (새 문법) |
+| `git` $`\color{red}{\vee}`$ `merge` $`\color{red}{\vee}`$ `--no-ff` $`\color{red}{\vee}`$ `feature/x`<br>[깃 머지 대시대시 노 에프에프] | 병합 커밋을 꼭 남기며 병합 |
+| `git` $`\color{red}{\vee}`$ `merge` $`\color{red}{\vee}`$ `--abort`<br>[깃 머지 대시대시 어보트] | 충돌 난 병합 취소 |
+| `git` $`\color{red}{\vee}`$ `branch` $`\color{red}{\vee}`$ `-d` / `git` $`\color{red}{\vee}`$ `branch` $`\color{red}{\vee}`$ `-D`<br>[대시 디 / 대시 대문자 디] | 병합된 브랜치 삭제 / 강제 삭제 |
+| `git` $`\color{red}{\vee}`$ `push` $`\color{red}{\vee}`$ `-u` $`\color{red}{\vee}`$ `origin` $`\color{red}{\vee}`$ `main`<br>[깃 푸시 대시 유 오리진 메인] | 처음 올리면서 추적 관계 설정 |
+| `git` $`\color{red}{\vee}`$ `fetch`<br>[깃 페치] | 원격 변경을 가져오기만 (합치지 않음) |
+| `git` $`\color{red}{\vee}`$ `remote` $`\color{red}{\vee}`$ `add` $`\color{red}{\vee}`$ `origin` $`\color{red}{\vee}`$ `URL`<br>[깃 리모트 애드 오리진 유알엘] | 원격 저장소 연결 |
+| `git` $`\color{red}{\vee}`$ `revert` $`\color{red}{\vee}`$ `a1b2c3d`<br>[깃 리버트] | 커밋을 되돌리는 새 커밋 만들기 |
+| `git` $`\color{red}{\vee}`$ `stash` / `git` $`\color{red}{\vee}`$ `stash` $`\color{red}{\vee}`$ `pop`<br>[깃 스태시 / 스태시 팝] | 작업 임시 보관 / 다시 꺼내기 |
+| `ssh-keygen` $`\color{red}{\vee}`$ `-t` $`\color{red}{\vee}`$ `ed25519`<br>[에스에스에이치 키젠 대시 티] | SSH 키 만들기 |
+| `ssh` $`\color{red}{\vee}`$ `-T` $`\color{red}{\vee}`$ `git@github.com`<br>[에스에스에이치 대시 대문자 티 깃 앳 깃허브 닷컴] | GitHub SSH 연결 확인 |
+
+### 5-4. 헷갈리기 쉬운 명령
+
+| 비교 | 차이 |
+| --- | --- |
+| `cd`<br>`mv` | `cd`: **내가** 그 폴더로 이동 (파일은 그대로)<br>`mv`: **파일을** 다른 곳으로 옮기거나 이름 바꾸기 |
+| `mv`<br>`cp` | `mv`: 옮기기, 원본이 사라짐<br>`cp`: 복사하기, 원본이 남음 |
+| `git` $`\color{red}{\vee}`$ `clone`<br>`git` $`\color{red}{\vee}`$ `pull` | clone: GitHub 저장소를 **처음 한 번** 통째로 복사<br>pull: 이미 받은 저장소를 **최신으로** 맞춤 |
+| `git` $`\color{red}{\vee}`$ `clone`<br>`cp` $`\color{red}{\vee}`$ `-r` | clone: GitHub → 내 PC (변경 이력까지)<br>`cp` $`\color{red}{\vee}`$ `-r`: 내 PC 안에서 폴더 복사 (이력 없음) |
+| `git` $`\color{red}{\vee}`$ `fetch`<br>`git` $`\color{red}{\vee}`$ `pull` | fetch: 받기만 / pull: 받기 + 합치기 |
+| GitHub **Code** 버튼<br>HTTPS 주소<br>SSH 주소 | `https://github.com/아이디/E1-2.git`<br>→ 로그인·토큰 필요<br>`git@github.com:아이디/E1-2.git`<br>→ SSH 키를 등록하면 비밀번호 없이 |
+| `>`<br>`>>` | 덮어쓰기 / 이어 쓰기 |
+| `head`<br>`tail` | 앞부분 / 뒷부분 |
+| `cat`<br>`echo` | 파일 **내용** 출력 / 내가 쓴 **글자** 출력 |
+| `rm`<br>`rmdir`<br>`rm` $`\color{red}{\vee}`$ `-rf` | 파일 삭제 / 빈 폴더만 삭제 / 폴더를 통째로 확인 없이 |
+| `git` $`\color{red}{\vee}`$ `add`<br>`git` $`\color{red}{\vee}`$ `commit` | 담기 / 기록 확정 |
+| `git` $`\color{red}{\vee}`$ `restore`<br>`git` $`\color{red}{\vee}`$ `restore` $`\color{red}{\vee}`$ `--staged` | 수정 내용 버리기 / 스테이징만 취소 |
+| `git` $`\color{red}{\vee}`$ `reset`<br>`git` $`\color{red}{\vee}`$ `revert` | 기록 되감기 / 되돌리는 새 커밋 |
+| `git` $`\color{red}{\vee}`$ `branch` $`\color{red}{\vee}`$ `X`<br>`git` $`\color{red}{\vee}`$ `checkout` $`\color{red}{\vee}`$ `-b` $`\color{red}{\vee}`$ `X` | 만들기만 / 만들고 이동까지 |
+| `python`<br>`python3` | Windows는 보통 `python`, 리눅스(WSL)는 `python3` |
+| `bash` $`\color{red}{\vee}`$ `a.sh`<br>`source` $`\color{red}{\vee}`$ `a.sh` | 새 셸에서 실행 / 지금 셸에서 실행 (설정이 남음) |
+| `json.load`<br>`json.loads` | 파일에서 읽기 / 문자열에서 읽기 |
+| `random.shuffle`<br>`random.sample` | 원본을 섞음 / 원본은 두고 n개 뽑기 |
 
 ## 6. 기술 스택 및 실행 환경
 
