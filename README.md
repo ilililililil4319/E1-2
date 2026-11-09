@@ -258,13 +258,17 @@ E1-2/
 
 | 도구 | 버전 | 용도 |
 | --- | --- | --- |
-| OS | Windows + WSL2 Ubuntu | 실행 환경 |
-| Python | 3.10 이상<br>(실행 로그의 실제 버전) | 게임 실행 |
-| Git | 실행 로그의 실제 버전 | 버전 관리 |
+| OS | Windows + WSL2<br>Ubuntu 26.04.1 LTS | 실행 환경 |
+| Python | 3.14.4<br>(요구: 3.10 이상) | 게임 실행 |
+| Git | 2.53.0 | 버전 관리 |
 | VSCode (WSL 확장) | - | 편집, 터미널 |
 | 외부 라이브러리 | 없음 | 표준 라이브러리만 사용<br>`json`, `os`, `random`,<br>`datetime`, `sys` |
 
-버전 출처: [00_env.md](docs/logs/00_env.md)
+버전 출처: [00_env.md](docs/logs/00_env.md) (집 PC에서 실행)
+
+| VSCode (WSL 연결) | Python 버전 | Git 설정 |
+| --- | --- | --- |
+| ![VSCode](docs/screenshots/vscode.png) | ![Python](docs/screenshots/python-check.png) | ![Git 설정](docs/screenshots/git-check.png) |
 
 ## 7. 사용 자료·이미지 및 출처
 
@@ -373,7 +377,9 @@ $ sleep 3 | timeout --preserve-status -s INT 1 python3 main.py | tail -n 3; echo
 종료 코드: 0
 ```
 
-사진: [menu.png](docs/screenshots/menu.png)
+| 메뉴 | 잘못된 입력 |
+| --- | --- |
+| ![메뉴](docs/screenshots/menu.png) | ![잘못된 입력](docs/screenshots/invalid-input.png) |
 
 ### 12-2. 퀴즈 풀기 — [06_play.md](docs/logs/06_play.md)
 
@@ -390,7 +396,7 @@ Git에서 변경된 파일을 스테이징 영역(Staging Area)에 올리는 명
 ========================================
 ```
 
-사진: [play.png](docs/screenshots/play.png)
+![퀴즈 풀기](docs/screenshots/play.png)
 
 ### 12-3. 퀴즈 추가·목록 — [07_add_quiz.md](docs/logs/07_add_quiz.md), [08_list.md](docs/logs/08_list.md)
 
@@ -406,7 +412,9 @@ Git에서 변경된 파일을 스테이징 영역(Staging Area)에 올리는 명
 ✅ 퀴즈가 추가되었습니다!
 ```
 
-사진: [add_quiz.png](docs/screenshots/add_quiz.png), [list.png](docs/screenshots/list.png)
+| 퀴즈 추가 | 퀴즈 목록 |
+| --- | --- |
+| ![퀴즈 추가](docs/screenshots/add_quiz.png) | ![퀴즈 목록](docs/screenshots/list.png) |
 
 ### 12-4. 점수 확인 — [09_score.md](docs/logs/09_score.md)
 
@@ -416,7 +424,7 @@ Git에서 변경된 파일을 스테이징 영역(Staging Area)에 올리는 명
 🏆 최고 점수: 100점 (3문제 중 3문제 정답)
 ```
 
-사진: [score.png](docs/screenshots/score.png)
+![점수 확인](docs/screenshots/score.png)
 
 ### 12-5. state.json 저장·복구 — [11_state_json.md](docs/logs/11_state_json.md)
 
@@ -425,9 +433,15 @@ Git에서 변경된 파일을 스테이징 영역(Staging Area)에 올리는 명
    손상된 파일은 state.json.bak로 백업했습니다.
 ```
 
+껐다 켜도 데이터가 남는다: 퀴즈 7개, 최고 점수 100점을 그대로 불러옴
+
+![재실행](docs/screenshots/restart.png)
+
 ### 12-6. Git 이력 — [18_git_history.md](docs/logs/18_git_history.md)
 
-사진: [git-log-graph.png](docs/screenshots/git-log-graph.png)
+| `git log --oneline --graph --all` | GitHub 저장소 |
+| --- | --- |
+| ![Git 이력](docs/screenshots/git-log-graph.png) | ![GitHub 저장소](docs/screenshots/github-repo.png) |
 
 ## 13. 보너스 과제
 
@@ -441,6 +455,10 @@ Git에서 변경된 파일을 스테이징 영역(Staging Area)에 올리는 명
 | 점수 히스토리 | 판마다 `played_at`, `total`, `correct`,<br>`hints_used`, `score` 저장 | 3판 기록,<br>평균 점수 | ✅ [로그](docs/logs/17_bonus_history.md) |
 
 점수 계산식: `점수 = round((힌트 없이 맞힌 수 × 1 + 힌트 쓰고 맞힌 수 × 0.5) ÷ 푼 문제 수 × 100)`
+
+| 퀴즈 삭제 | 게임 기록 |
+| --- | --- |
+| ![퀴즈 삭제](docs/screenshots/delete.png) | ![게임 기록](docs/screenshots/history.png) |
 
 ## 14. 로컬 실행 방법
 
@@ -527,6 +545,13 @@ bash scripts/run_all.sh    # 실습 스크립트 전체 실행 → docs/logs/ �
 - 원인 가설: 메뉴가 5개 → 7개로 늘면서 번호가 밀려 7이 "종료"가 되었다.
 - 확인: 메뉴를 출력해 보니 6이 게임 기록, 7이 종료였다.
 - 해결: 테스트 입력 번호를 고치고, 메뉴는 리스트(`menu_items`) 하나로 관리해 번호와 범위 안내가 자동으로 맞춰지게 했다.
+
+**④ 퀴즈 추가 화면에서 메뉴 번호를 입력함 (집 PC 실습 중)**
+
+- 문제: 메뉴로 돌아간 줄 알고 `2`, `7`, `7`을 입력했더니 문제·선택지로 들어갔고, 선택지 3에서 빈 입력 안내가 반복됐다.
+- 원인 가설: `2`(퀴즈 추가)를 고른 뒤라 프로그램은 이미 "문제 입력" 단계였다. 화면 맨 위 `📌 새로운 퀴즈를 추가합니다.`를 놓쳤다.
+- 확인: 화면을 위로 올려 보니 `문제를 입력하세요: 2`, `선택지 1: 7`로 기록되어 있었다.
+- 해결: `Ctrl+C`로 중단 → "데이터를 저장하고 안전하게 종료" 후 다시 실행. 만들던 퀴즈는 저장되지 않았고(목록 7개 유지), 처음부터 다시 추가했다. 입력 중 Ctrl+C 처리가 실제로 쓸모 있음을 확인했다.
 
 ## 17. AI(Claude) 사용 로그 요약
 
