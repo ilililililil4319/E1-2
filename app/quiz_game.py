@@ -4,10 +4,10 @@ import os
 import random
 from datetime import datetime
 
-from default_quizzes import create_default_quizzes
-from input_utils import read_number, read_text, read_yes_no
-from quiz import CHOICE_COUNT, Quiz
-from storage import StateFileError
+from .default_quizzes import create_default_quizzes
+from .input_utils import read_number, read_text, read_yes_no
+from .quiz import CHOICE_COUNT, Quiz
+from .storage import StateFileError
 
 LINE = "=" * 40
 SUB_LINE = "-" * 40

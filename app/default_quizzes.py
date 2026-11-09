@@ -3,7 +3,7 @@
 주제: 개발 입문 상식 (CLI · Git · Python)
 """
 
-from quiz import Quiz
+from .quiz import Quiz
 
 
 def create_default_quizzes():

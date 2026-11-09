@@ -3,7 +3,7 @@
 import json
 import os
 
-from quiz import Quiz
+from .quiz import Quiz
 
 ENCODING = "utf-8"
 
